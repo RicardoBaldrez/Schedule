@@ -5,7 +5,7 @@ const middlewareGlobal = (req, res, next) => {
 
 const checkCsrfError = (error, req, res, next) => {
   console.log('Checando erros CSRF');
-  if(error && error.code === 'EBADCSRFTOKEN') {
+  if(error) {
     return res.render('404');
   }
 }
