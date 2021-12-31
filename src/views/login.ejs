@@ -6,11 +6,11 @@
 
       <div class="col-lg-8 my-3">
         <h1 class="text-center">Login</h1>
-        <p class="text-center lead">Faça o login ou crie sua conta abaixo</p>
+        <p class="text-center lead">Login or create your account below</p>
         <div class="row">
           <div class="col-lg">
-            <h4>Faça seu cadastro</h4>
-            <p>Se você ainda não tem conta, preencha o formulário abaixo</p>
+            <h4>Make your registration</h4>
+            <p>If you don't have an account yet, fill in the form below.</p>
             <form action="/login/register" method="POST">
               <input type="hidden" name="_csrf" value=<%= csrfToken %>>
               <div class="form-group mb-3">
@@ -21,12 +21,12 @@
                 <label for="lastName">LastName</label>
                 <input type="text" class="form-control" id="lastName" placeholder="last Name">
               </div>
-              <button type="submit" class="btn btn-primary">Criar minha conta</button>
+              <button type="submit" class="btn btn-primary">Create my account</button>
             </form>
           </div>
           <div class="col-lg">
-            <h4>Faça seu login</h4>
-            <p>Se você já tem conta, faça seu login abaixo</p>
+            <h4>Login</h4>
+            <p>If you already have an account, please login below</p>
             <form action="/login/login" method="POST">
               <input type="hidden" name="_csrf" value=<%= csrfToken %>>
               <div class="form-group mb-3">
@@ -41,7 +41,7 @@
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">Check me out</label>
               </div>
-              <button type="submit" class="btn btn-primary">Entrar</button>
+              <button type="submit" class="btn btn-primary">Log in</button>
             </form>
           </div>
         </div>
