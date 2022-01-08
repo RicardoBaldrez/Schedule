@@ -1,5 +1,7 @@
 const middlewareGlobal = (req, res, next) => {
-  console.log('Passando pelo Middleware');
+  console.log('Passando pelo Middleware Global');
+  res.locals.errors = req.flash('errors');
+  res.locals.success = req.flash('success');
   next();
 }
 
