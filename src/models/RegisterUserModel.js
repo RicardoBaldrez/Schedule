@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcryptjs = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true },
@@ -19,6 +20,8 @@ class RegisterUser {
     this.valid();
     if(this.errors.length > 0) return;
     try {
+      const salt = bcryptjs.genSaltSync();
+      this.body.passwordRegister = bcryptjs.hashSync(this.body.passwordRegister, salt);
       this.user = await UsersModel.create(this.body);
     } catch (error) {
       console.log(error);
