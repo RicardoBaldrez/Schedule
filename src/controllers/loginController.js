@@ -6,11 +6,11 @@ exports.index = (req, res) => {
 
 exports.register = async (req, res) => {
   try {
-    const login = new RegisterUser(req.body);
-    await login.register();
+    const register = new RegisterUser(req.body);
+    await register.register();
 
-    if(login.errors.length > 0) {
-      req.flash('errors', login.errors);
+    if(register.errors.length > 0) {
+      req.flash('errors', register.errors);
       req.session.save(() => {
         return res.redirect('/login');
       })
