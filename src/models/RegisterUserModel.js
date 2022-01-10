@@ -18,14 +18,26 @@ class RegisterUser {
 
   async register() {
     this.valid();
+    
     if(this.errors.length > 0) return;
+
+    await this.userExists();
+
+    if(this.errors.length > 0) return;
+
+    const salt = bcryptjs.genSaltSync();
+    this.body.passwordRegister = bcryptjs.hashSync(this.body.passwordRegister, salt);
+
     try {
-      const salt = bcryptjs.genSaltSync();
-      this.body.passwordRegister = bcryptjs.hashSync(this.body.passwordRegister, salt);
       this.user = await UsersModel.create(this.body);
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async userExists() {
+    const user = await UsersModel.findOne({ email: this.body.email });
+    if(user) this.errors.push('Usuário já existe.');
   }
 
   valid() {
