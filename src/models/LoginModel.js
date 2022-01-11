@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcryptjs = require('bcryptjs');
 
-const UserSchema = new mongoose.Schema({
+const LoginSchema = new mongoose.Schema({
   email: { type: String, required: true },
   passwordRegister: { type: String, required: true }
 });
 
-const UsersModel = mongoose.model('Users', UserSchema);
+const LoginModel = mongoose.model('Users', LoginSchema);
 
-class RegisterUser {
+class Login {
   constructor(body) {
     this.body = body;
     this.errors = [];
@@ -28,11 +28,11 @@ class RegisterUser {
     const salt = bcryptjs.genSaltSync();
     this.body.passwordRegister = bcryptjs.hashSync(this.body.passwordRegister, salt);
 
-    this.user = await UsersModel.create(this.body);
+    this.user = await LoginModel.create(this.body);
   }
 
   async userExists() {
-    const user = await UsersModel.findOne({ email: this.body.email });
+    const user = await LoginModel.findOne({ email: this.body.email });
     if(user) this.errors.push('Usuário já existe.');
   }
 
@@ -58,4 +58,4 @@ class RegisterUser {
   }
 }
 
-module.exports = RegisterUser;
+module.exports = Login;
