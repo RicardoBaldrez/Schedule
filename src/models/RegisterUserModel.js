@@ -18,7 +18,7 @@ class RegisterUser {
 
   async register() {
     this.valid();
-    
+
     if(this.errors.length > 0) return;
 
     await this.userExists();
@@ -28,11 +28,7 @@ class RegisterUser {
     const salt = bcryptjs.genSaltSync();
     this.body.passwordRegister = bcryptjs.hashSync(this.body.passwordRegister, salt);
 
-    try {
-      this.user = await UsersModel.create(this.body);
-    } catch (error) {
-      console.log(error);
-    }
+    this.user = await UsersModel.create(this.body);
   }
 
   async userExists() {
