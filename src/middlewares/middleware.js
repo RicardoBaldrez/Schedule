@@ -19,8 +19,19 @@ const csrfMiddleware = (req, res, next) => {
   next();
 }
 
+const loginRequired = (req, res, next) => {
+  if(!req.session.user) {
+    req.flash('errors', 'Você precisa estar logado para acessar a página de contatos.');
+    req.session.save(() => res.redirect('/'));
+    return;
+  }
+
+  next();
+}
+
 module.exports = {
   middlewareGlobal,
   checkCsrfError,
-  csrfMiddleware
+  csrfMiddleware,
+  loginRequired
 }
