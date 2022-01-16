@@ -53,4 +53,11 @@ Contact.prototype.cleanUp = function() {
   };
 }
 
+Contact.prototype.edit = async function(id) {
+  if(typeof id !== 'string') return;
+  this.valid();
+  if(this.errors.length > 0) return;
+  this.contact = await ContactModel.findByIdAndUpdate(id, this.body, { new: true }); // { new: true } => para nos retornar os dados atualizado e não os antigos
+}
+
 module.exports = Contact;
