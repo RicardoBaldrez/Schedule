@@ -1,4 +1,4 @@
-a<%- include('./includes/head') %>
+<%- include('./includes/head') %>
 <%- include('./includes/navbar') %>
   <div class="container">
     <div class="row">
@@ -10,20 +10,24 @@ a<%- include('./includes/head') %>
 
         <%- include('./includes/messages') %>
         
-        <div class="responsive-table">
-          <table class="table my-3">
-            <% contacts.forEach((contact) => { %>
-              <tr>
-                <td><%= contact.name %></td>
-                <td><%= contact.lastname %></td>
-                <td><%= contact.email %></td>
-                <td><%= contact.tel %></td>
-                <td><a href="/contact/<%= contact._id %>">editar</a></td>
-                <td><a class="text-danger" href="/contact/delete/<%= contact._id %>">excluir</a></td>
-              </tr>
-            <% }) %>
-          </table>
-        </div>
+        <% if(contacts.lenght > 0) { %>
+          <div class="responsive-table">
+            <table class="table my-3">
+              <% contacts.forEach((contact) => { %>
+                <tr>
+                  <td><%= contact.name %></td>
+                  <td><%= contact.lastname %></td>
+                  <td><%= contact.email %></td>
+                  <td><%= contact.tel %></td>
+                  <td><a href="/contact/<%= contact._id %>">editar</a></td>
+                  <td><a class="text-danger" href="/contact/delete/<%= contact._id %>">excluir</a></td>
+                </tr>
+              <% }) %>
+            </table>
+          </div>
+        <% } else { %>
+          <h1 class="text-center text-danger lead">Nenhum contato gravado</h1>
+        <% } %>
       </div>
 
       <div class="col-lg-2"></div>

@@ -9,7 +9,11 @@ const helmet = require('helmet'); // Helmet é uma recomendação do Express
 const csrf = require('csurf'); // CSRF
 
 const mongoose = require('mongoose');
-mongoose.connect(process.env.CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.CONNECTION, { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+})
   .then(() => {
     console.log('DB conectado!!!');
     app.emit('DBConnected');

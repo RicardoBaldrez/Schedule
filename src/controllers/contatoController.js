@@ -51,3 +51,11 @@ exports.edit = async (req, res) => {
     return res.render('404');
   }
 }
+
+exports.delete = async (req, res) => {
+  if(!req.params.id) return res.render('404');
+  const deleteContact = await Contact.delete(req.params.id);
+  if(!deleteContact) return res.render('404');
+  req.flash('success', 'Contato deletado com sucesso');
+  req.session.save(() => res.redirect('/'));
+}
