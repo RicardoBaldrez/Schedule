@@ -17,12 +17,6 @@ function Contact(body) {
   this.contact = null;
 }
 
-Contact.searchPerId = async (id) => {
-  if(typeof id !== 'string') return;
-  const user = await ContactModel.findById(id);
-  return user;
-}
-
 Contact.prototype.register = async function() {
   this.valid();
   if(this.errors.length > 0) return;
@@ -58,6 +52,20 @@ Contact.prototype.edit = async function(id) {
   this.valid();
   if(this.errors.length > 0) return;
   this.contact = await ContactModel.findByIdAndUpdate(id, this.body, { new: true }); // { new: true } => para nos retornar os dados atualizado e não os antigos
+}
+
+// Methods statics
+Contact.searchPerId = async (id) => {
+  if(typeof id !== 'string') return;
+  const contact = await ContactModel.findById(id);
+  return contact;
+}
+
+Contact.searchAllContacts = async () => {
+  // const contacts = await ContactModel.find({ email: 'ricardo.baldrez@gmail.com' }); -> Exemplo de filtro, buscando o contato que tem o email ricardo.baldrez@gmail.com
+  const contacts = await ContactModel.find()
+  .sort({ created: -1 }); // Ordenando pelo campo created e o -1 é para decrescente
+  return contacts;
 }
 
 module.exports = Contact;
