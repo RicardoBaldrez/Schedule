@@ -3,7 +3,7 @@ const validator = require('validator');
 
 const ContactSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  lastName: { type: String, required: false, defalt: '' },
+  lastname: { type: String, required: false, defalt: '' },
   email: { type: String, required: false, defalt: '' },
   tel: { type: String, required: false, defalt: '' },
   created: { type: Date, defalt: Date.now },
@@ -17,13 +17,25 @@ function Contact(body) {
   this.contact = null;
 }
 
-Contact.prototype.register = function() {
+Contact.searchPerId = async (id) => {
+  if(typeof id !== 'string') return;
+  const user = await ContactModel.findById(id);
+  return user;
+}
+
+Contact.prototype.register = async function() {
   this.valid();
+  if(this.errors.length > 0) return;
+  this.contact = await ContactModel.create(this.body);
 };
 
 Contact.prototype.valid = function() {
   this.cleanUp();
-  if(!validator.isEmail(this.body.email)) this.errors.push('E-mail inválido');
+  if(this.body.email && !validator.isEmail(this.body.email)) this.errors.push('E-mail inválido');
+  if(!this.body.name) this.errors.push('Campo nome é obrigatório');
+  if(!this.body.email && !this.body.tel) {
+    this.errors.push('O contato precisa ter um email ou telefone para ser registrado');
+  }
 }
 
 Contact.prototype.cleanUp = function() {
@@ -32,10 +44,10 @@ Contact.prototype.cleanUp = function() {
       this.body[key] = '';
     }
   }
-
+  
   this.body = {
     name: this.body.name,
-    lastName: this.body.lastName,
+    lastname: this.body.lastname,
     email: this.body.email,
     tel: this.body.tel,
   };
